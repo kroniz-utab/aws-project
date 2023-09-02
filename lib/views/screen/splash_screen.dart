@@ -7,9 +7,9 @@ import 'package:project_aws/utils/constant.dart';
 import 'package:project_aws/utils/enum.dart';
 import 'package:project_aws/utils/extension.dart';
 import 'package:project_aws/views/bloc/auth/auth_bloc.dart';
+import 'package:project_aws/views/bloc/aws_data/aws_data_bloc.dart';
+import 'package:project_aws/views/bloc/theme/theme_bloc.dart';
 import 'package:project_aws/views/provider/splash_provider.dart';
-import 'package:project_aws/views/provider/theme_provider.dart';
-import 'package:project_aws/views/screen/main_screen.dart';
 import 'package:project_aws/views/widget/circle_background.dart';
 import 'package:project_aws/views/widget/rotate_square_background.dart';
 
@@ -26,8 +26,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     Future.delayed(
       const Duration(seconds: 3),
       () {
-        ref.read(themeProvider.notifier).change();
         context.read<AuthBloc>().add(const AuthEvent.started());
+        context.read<ThemeBloc>().add(const ThemeEvent.change());
       },
     );
   }
@@ -45,12 +45,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
               ref.read(splashProvider.notifier).state = SplashStateEnum.loading;
             },
             success: (data) {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const MainScreen(),
-                ),
-              );
+              context.read<AwsDataBloc>().add(const AwsDataEvent.started());
+              Navigator.pushReplacementNamed(context, '/home');
             },
             error: (failure) {
               ref.read(splashProvider.notifier).state = SplashStateEnum.failed;

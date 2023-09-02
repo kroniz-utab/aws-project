@@ -1,13 +1,19 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+
+import 'package:project_aws/data/entity/aws_data.dart';
 import 'package:project_aws/styles/colors.dart';
 import 'package:project_aws/utils/constant.dart';
 import 'package:project_aws/utils/text_scaling.dart';
 import 'package:project_aws/views/widget/parameter_grid.dart';
+import 'package:project_aws/views/widget/parameter_grid_svg.dart';
 
 class ParameterSection extends StatelessWidget {
+  final AwsData data;
   const ParameterSection({
-    super.key,
-  });
+    Key? key,
+    required this.data,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,51 +38,54 @@ class ParameterSection extends StatelessWidget {
           crossAxisSpacing: 2,
           childAspectRatio: 6 / 5,
         ),
-        children: const [
-          ParameterGrid(
-            icons: Icons.dew_point,
-            title: 'Dew Point',
-            value: '32.0 \u2103',
+        children: [
+          ParameterGridSvg(
+            path: 'assets/svg/thermometer_gain.svg',
+            title: 'Temp. Max',
+            value: data.airTempMax == null ? '--' : '${data.airTempMax}\u2103',
           ),
-          ParameterGrid(
-            icons: Icons.air_rounded,
-            title: 'Wind Speed',
-            value: '2.5 m/s',
-          ),
-          ParameterGrid(
-            icons: Icons.explore_outlined,
-            title: 'Wind Direction',
-            value: '188\u00B0',
+          ParameterGridSvg(
+            path: 'assets/svg/thermometer_loss.svg',
+            title: 'Temp. Min',
+            value: data.airTempMin == null ? '--' : '${data.airTempMin}\u2103',
           ),
           ParameterGrid(
             icons: Icons.water_drop_outlined,
             title: 'Humidity',
-            value: '88.8 %',
+            value: data.humidity == null ? '--' : '${data.humidity} %',
+          ),
+          ParameterGrid(
+            icons: Icons.air_rounded,
+            title: 'Wind Speed',
+            value: data.windSpeed == null ? '--' : '${data.windSpeed} m/s',
+          ),
+          ParameterGrid(
+            icons: Icons.explore_outlined,
+            title: 'Wind Direction',
+            value: data.windDirection == null
+                ? '--'
+                : '${data.windDirection}\u00B0',
           ),
           ParameterGrid(
             icons: Icons.speed,
             title: 'Air Pressure',
-            value: '188\u00B0',
+            value:
+                data.airPressure == null ? '--' : '${data.airPressure}\u00B0',
           ),
-          ParameterGrid(
-            icons: Icons.water_drop_outlined,
+          ParameterGridSvg(
+            path: 'assets/svg/rainy.svg',
             title: 'Rainfall',
-            value: '2 mm',
+            value: data.rainfall == null ? '--' : '${data.rainfall} mm',
           ),
           ParameterGrid(
             icons: Icons.wb_sunny_outlined,
             title: 'Solar Radiation',
-            value: '1720 W/m\u00b2',
+            value: data.solarRad == null ? '--' : '${data.solarRad} W/m\u00b2',
           ),
-          ParameterGrid(
-            icons: Icons.wb_sunny_outlined,
-            title: 'Net Radiation',
-            value: '1720 W/m\u00b2',
-          ),
-          ParameterGrid(
-            icons: Icons.wb_sunny_outlined,
-            title: 'Ref. Radiation',
-            value: '1720 W/m\u00b2',
+          ParameterGridSvg(
+            path: 'assets/svg/evaporation.svg',
+            title: 'Pan Evapor.',
+            value: data.panEva == null ? '--' : '${data.panEva} mm',
           ),
         ],
       ),

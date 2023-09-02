@@ -35,18 +35,22 @@ class RemoteAwsCenterDatasourceImpl extends AwsCenterClient
 
   @override
   Future<Either<Failure, AwsData>> getDataFromAws({required String token}) {
-    final dFormat = DateFormat('yyyy-MM-dd hh:mm:ss');
+    const delayHour = 1;
+    final dFormat = DateFormat('yyyy-MM-dd HH:mm:ss');
     final now = DateTime.now().toUtc();
-    final before = DateTime.now()
-        .toUtc()
-        .subtract(const Duration(minutes: 9, seconds: 30));
+    final before =
+        DateTime.now().toUtc().subtract(const Duration(hours: delayHour));
     return get(
       '/getdata',
       onSuccess: (response) {
         if (response.length == 0) {
           throw NotFoundException();
         } else {
-          return AwsDataModels.fromJson(response[0]).toEntity();
+          final result = awsDataFromJson(response);
+          result.sort(
+            (a, b) => a.tanggal!.compareTo(b.tanggal!),
+          );
+          return result.last;
         }
       },
       cToken: CancelToken(),

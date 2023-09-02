@@ -12,7 +12,8 @@ Future<Either<Failure, T>> failureHandler<T>(e) async {
   } on UnauthorizedException catch (e) {
     return Left(UnauthorizationFailure(e.message));
   } on NotFoundException {
-    return const Left(NotFoundFailure('Invalid Id, Data not Found!'));
+    return const Left(NotFoundFailure(
+        'Data tidak tersedia, mohon tunggu sebentar dan ulangi request!'));
   } on ServerException catch (e) {
     return Left(ServerFailure(e.message));
   } on CommonException catch (e) {

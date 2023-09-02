@@ -30,7 +30,7 @@ class LoggingInterceptor extends Interceptor {
 
   @override
   Future<FutureOr> onError(
-      DioError err, ErrorInterceptorHandler handler) async {
+      DioException err, ErrorInterceptorHandler handler) async {
     log(
       '<-- ${err.message} ${(err.response?.requestOptions != null ? (err.response?.requestOptions.path) : 'URL')}',
       name: 'DioInterceptor',

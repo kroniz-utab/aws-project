@@ -8,6 +8,7 @@ import 'package:project_aws/data/usecase/post_auth.dart';
 import 'package:project_aws/helper/preferences_helper.dart';
 import 'package:project_aws/views/bloc/auth/auth_bloc.dart';
 import 'package:project_aws/views/bloc/aws_data/aws_data_bloc.dart';
+import 'package:project_aws/views/bloc/theme/theme_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final locator = GetIt.instance;
@@ -45,4 +46,6 @@ void init() {
   locator.registerFactory<AwsDataBloc>(
     () => AwsDataBloc(locator(), locator()),
   );
+
+  locator.registerFactory<ThemeBloc>(() => ThemeBloc());
 }

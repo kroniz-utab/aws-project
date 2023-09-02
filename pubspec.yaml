@@ -1,5 +1,5 @@
 name: project_aws
-description: A new Flutter project.
+description: A project for AWS Nabire - krznUtab.
 publish_to: "none"
 version: 0.1.0
 
@@ -36,4 +36,5 @@ flutter:
 
   assets:
     - assets/img/
+    - assets/svg/
     - assets/.env

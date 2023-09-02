@@ -1,5 +1,7 @@
 // ignore_for_file: invalid_annotation_target
 
+import 'dart:convert';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:project_aws/data/entity/aws_data.dart';
 
@@ -47,3 +49,7 @@ class AwsDataModels with _$AwsDataModels {
     );
   }
 }
+
+List<AwsData> awsDataFromJson(List<dynamic> data) =>
+    List<AwsData>.from(jsonDecode(jsonEncode(data))
+        .map((data) => AwsDataModels.fromJson(data).toEntity()));

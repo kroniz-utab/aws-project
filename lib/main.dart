@@ -4,6 +4,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_aws/views/bloc/auth/auth_bloc.dart';
 import 'package:project_aws/views/bloc/aws_data/aws_data_bloc.dart';
+import 'package:project_aws/views/bloc/theme/theme_bloc.dart';
+import 'package:project_aws/views/screen/main_screen.dart';
 import 'package:project_aws/views/screen/splash_screen.dart';
 import 'package:project_aws/injector.dart' as di;
 
@@ -29,10 +31,18 @@ class MainApp extends StatelessWidget {
         BlocProvider<AwsDataBloc>(
           create: (context) => di.locator<AwsDataBloc>(),
         ),
+        BlocProvider<ThemeBloc>(
+          create: (context) => di.locator<ThemeBloc>(),
+        ),
       ],
-      child: const MaterialApp(
+      child: MaterialApp(
+        title: 'Project AWS',
         debugShowCheckedModeBanner: false,
-        home: SplashScreen(),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const SplashScreen(),
+          '/home': (context) => const MainScreen()
+        },
       ),
     );
   }
